@@ -43,23 +43,37 @@ public class CommandArgs {
 
     private List<String> parseArgs(final String[] args) {
         List<String> list = new ArrayList<>();
+        if (args.length == 0) {
+            return list;
+        }
         for (int i = 0; i < args.length; i++) {
             list.add(args[i]);
             String arg = args[i];
-            if (arg.charAt(0) == '-' && arg.length() > 1 && arg.matches("-[a-zA-Z]")) {
-                String character = arg.replaceFirst("-", "");
-                try {
+            if (arg != null && args.length != 0) {
+                if (arg.length() > 1 && arg.charAt(0) == '-' && arg.matches("-[a-zA-Z]")) {
+                    String character = arg.replaceFirst("-", "");
+
                     if (args[i + 1] != null) {
                         String value = args[i + 1];
                         Flag flag = new Flag(value, character);
                         flags.put(character, flag);
                     }
-                } catch (ArrayIndexOutOfBoundsException ex) {
+
                 }
             }
         }
 
         return list;
+    }
+
+    @Override
+    public String toString() {
+        String ret = "";
+        for (String s : args) {
+            ret += s;
+            ret += ";";
+        }
+        return ret;
     }
 
     /**
@@ -162,7 +176,6 @@ public class CommandArgs {
             return false;
         }
     }
-
 
     /**
      * Checks if there are any arguments

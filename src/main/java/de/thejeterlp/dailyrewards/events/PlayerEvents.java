@@ -20,16 +20,12 @@ package de.thejeterlp.dailyrewards.events;
 import de.thejeterlp.dailyrewards.player.PlayerManager;
 import de.thejeterlp.dailyrewards.player.SQLPlayer;
 import de.thejeterlp.dailyrewards.utils.Config;
-import de.thejeterlp.dailyrewards.utils.ItemSettings;
 import de.thejeterlp.dailyrewards.utils.Utils;
-import java.util.List;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class PlayerEvents implements Listener {
     
@@ -64,6 +60,8 @@ public class PlayerEvents implements Listener {
         
         if (!p.hasGrabbedInventory()) {
             e.getPlayer().sendMessage("§aYou havent played already today, grab your reward with /rewards grab. Be careful, you can only execute this command §4ONCE§a, so be prepared to have enough space in your inventory!");
+        } else {
+            e.getPlayer().sendMessage("§aAlready grabbed reward today, the next one will be available tomorrow!");
         }
     }
     

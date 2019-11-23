@@ -18,6 +18,9 @@
 package de.thejeterlp.dailyrewards.utils;
 
 import java.util.Calendar;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class Utils {
 
@@ -29,5 +32,15 @@ public class Utils {
         Calendar cal = Calendar.getInstance();
         int day = cal.get(Calendar.DAY_OF_YEAR);
         return day;
+    }
+
+    public static int freePlacesInInv(Player p) {
+        int free = 0;
+        for (ItemStack st : p.getInventory().getStorageContents()) {
+            if (st == null || st.getType() == Material.AIR) {
+                free++;
+            }
+        }
+        return free;
     }
 }

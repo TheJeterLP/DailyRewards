@@ -20,16 +20,17 @@ package de.thejeterlp.dailyrewards.utils;
 import de.thejeterlp.dailyrewards.DailyRewards;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemSettings {
-    
+
     private static YamlConfiguration cfg;
     private static final File f = new File(DailyRewards.getInstance().getDataFolder(), "rewards.database");
-    
+
     public static void load() {
         DailyRewards.getInstance().getDataFolder().mkdirs();
         if (!f.exists()) {
@@ -41,19 +42,24 @@ public class ItemSettings {
         }
         cfg = YamlConfiguration.loadConfiguration(f);
     }
-    
+
     public static List<ItemStack> getReward(int day) {
-        return ItemSerialization.load(day);
+        List<ItemStack> ret = ItemSerialization.load(day);
+        if (ret != null) {
+            return ret;
+        } else {
+            return new ArrayList<>();
+        }
     }
-    
+
     public static void setReward(int day, Inventory inv) {
-        ItemSerialization.save(inv, day);       
+        ItemSerialization.save(inv, day);
     }
-    
+
     public static YamlConfiguration getConfig() {
         return cfg;
     }
-    
+
     public static void save() {
         try {
             cfg.save(f);
@@ -61,5 +67,5 @@ public class ItemSettings {
             ex.printStackTrace();
         }
     }
-    
+
 }

@@ -27,6 +27,7 @@ import de.thejeterlp.dailyrewards.commands.HelpPage;
 import de.thejeterlp.dailyrewards.player.PlayerManager;
 import de.thejeterlp.dailyrewards.player.SQLPlayer;
 import de.thejeterlp.dailyrewards.utils.ItemSettings;
+import de.thejeterlp.dailyrewards.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Material;
@@ -85,10 +86,6 @@ public class RewardCommands {
 
     @BaseCommand(command = "rewards", sender = Sender.PLAYER, subCommand = "grab", permission = "dailyrewards.grab")
     public CommandResult executeGrab(Player sender, CommandArgs args) {
-        if (!args.isEmpty()) {
-            return CommandResult.ERROR;
-        }
-
         SQLPlayer sqp = PlayerManager.getPlayer(sender);
         if (sqp.hasGrabbedInventory()) {
             sender.sendMessage("§4You already used the grab command today, come back tomorrow!");
@@ -107,7 +104,7 @@ public class RewardCommands {
             }
         }
 
-        int free = 36 - sender.getInventory().getContents().length;
+        int free = Utils.freePlacesInInv(sender);
         if (free < ns.size()) {
             sender.sendMessage("§4You do NOT have enough space in your Inventory!");
             return CommandResult.SUCCESS;
@@ -137,7 +134,7 @@ public class RewardCommands {
         if (!fp.isPlayer()) {
             return CommandResult.NOT_ONLINE;
         }
-       
+
         int day = d.getInt();
 
         List<ItemStack> stack = ItemSettings.getReward(day);
@@ -150,7 +147,7 @@ public class RewardCommands {
             }
         }
 
-        int free = 36 - fp.getPlayer().getInventory().getContents().length;
+        int free = Utils.freePlacesInInv(fp.getPlayer());
         if (free < ns.size()) {
             sender.sendMessage("§4The Player does NOT have enough space in his Inventory!");
             return CommandResult.SUCCESS;
