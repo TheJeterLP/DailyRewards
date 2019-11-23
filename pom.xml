@@ -5,9 +5,63 @@
     <artifactId>DailyRewards</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
+    
+    <scm>
+        <connection>scm:git:git@github.com:TheJeterLP/DailyRewards.git</connection>
+        <url>scm:git:git@github.com:TheJeterLP/DailyRewards.git</url>
+        <developerConnection>scm:git:git@github.com:TheJeterLP/DailyRewards.git</developerConnection>
+    </scm>
+    
+    <distributionManagement>
+        <repository>
+            <id>jeter-repo</id>
+            <url>http://jeter.de:8081/repository/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>jeter-repo</id>
+            <url>http://jeter.de:8081/repository/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+    
+    <build>
+        <defaultGoal>clean install</defaultGoal>
+        <finalName>${project.name}</finalName>
+        <sourceDirectory>${basedir}/src/main/java/</sourceDirectory>
+        <resources>
+            <resource>
+                <targetPath>.</targetPath>
+                <filtering>true</filtering>
+                <directory>${basedir}/src/main/resources/</directory>
+                <includes>        
+                    <include>*</include>
+                </includes>
+            </resource>
+        </resources>      
+    </build>
+    
+    <repositories>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository> 
+        <repository>
+            <id>jeter-repo</id>
+            <url>http://nexus.jeter.de/repository/releases/</url>
+        </repository>  
+    </repositories>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.14.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>

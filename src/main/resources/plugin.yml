@@ -1,0 +1,5 @@
+name: ${project.name}
+main: de.thejeterlp.dailyrewards.DailyRewards
+version: ${project.version}
+author: TheJeterLP
+description: Daily logon reward plugin
