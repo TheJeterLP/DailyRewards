@@ -17,30 +17,43 @@
  */
 package de.thejeterlp.dailyrewards;
 
+import de.thejeterlp.dailyrewards.commands.CommandManager;
 import de.thejeterlp.dailyrewards.database.Database;
 import de.thejeterlp.dailyrewards.database.DatabaseFactory;
+import de.thejeterlp.dailyrewards.events.PlayerEvents;
+import de.thejeterlp.dailyrewards.player.PlayerManager;
 import de.thejeterlp.dailyrewards.utils.Config;
+import de.thejeterlp.dailyrewards.utils.ItemSettings;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class DailyRewards extends JavaPlugin {
-
+    
     private static DailyRewards INSTANCE;
     private static Database DB;
-
+    private CommandManager cmanager;
+    
     @Override
     public void onEnable() {
         INSTANCE = this;
         Config.load();
+        ItemSettings.load();
         DatabaseFactory.init();
         DB = DatabaseFactory.getDatabase();
+        PlayerManager.init();
+        getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
+        cmanager = new CommandManager(this);
+        cmanager.registerClass(RewardCommands.class);
     }
-
+    
     @Override
     public void onDisable() {
+        PlayerManager.save();
         getServer().getScheduler().cancelTasks(this);
         getLogger().info("is now disabled!");
+        INSTANCE = null;
+        DB = null;
     }
-
+    
     public static DailyRewards getInstance() {
         return INSTANCE;
     }
@@ -48,7 +61,7 @@ public class DailyRewards extends JavaPlugin {
     public static Database getDB() {
         return DB;
     }
-
+    
     public static void debug(String message) {
         if (!Config.DEBUG.getBoolean()) {
             return;
@@ -56,5 +69,5 @@ public class DailyRewards extends JavaPlugin {
         String output = "[DEBUG] " + message;
         getInstance().getLogger().info(output);
     }
-
+    
 }

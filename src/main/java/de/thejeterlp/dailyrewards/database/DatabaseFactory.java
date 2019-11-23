@@ -35,8 +35,8 @@ public class DatabaseFactory {
         }
         
         if (db.testConnection()) {
-            DailyRewards.getInstance().getLogger().log(Level.INFO, "The connection was successful!");
             createTables();
+            DailyRewards.getInstance().getLogger().log(Level.INFO, "Connected to database via {0}", db.getClass().getSimpleName());
         } else {
             DailyRewards.getInstance().getLogger().log(Level.SEVERE, "Could not connect to the Database!");
         }
@@ -47,30 +47,20 @@ public class DatabaseFactory {
         try {
             String PLAYER_TABLE;           
             if (db.getType() == Database.Type.SQLITE) {
-                PLAYER_TABLE = "CREATE TABLE IF NOT EXISTS `ac_player` ("
+                PLAYER_TABLE = "CREATE TABLE IF NOT EXISTS `dr_players` ("
                         + "`ID` INTEGER PRIMARY KEY AUTOINCREMENT,"
                         + "`uuid` varchar(64) NOT NULL,"
-                        + "`god` BOOLEAN,"
-                        + "`invisible` BOOLEAN,"
-                        + "`commandwatcher` BOOLEAN,"
-                        + "`spy` BOOLEAN,"
-                        + "`fly` BOOLEAN,"
-                        + "`muted` BOOLEAN,"
-                        + "`freeze` BOOLEAN,"
-                        + "`nickname` varchar(64) DEFAULT 'none'"
+                        + "`seenlast` INTEGER NOT NULL,"
+                        + "`daysinrow` INTEGER NOT NULL,"
+                        + "`playedtoday` BOOLEAN NOT NULL"
                         + ");";                
             } else {
-                PLAYER_TABLE = "CREATE TABLE IF NOT EXISTS `ac_player` ("
+                PLAYER_TABLE = "CREATE TABLE IF NOT EXISTS `dr_players` ("
                         + "`ID` INTEGER PRIMARY KEY AUTO_INCREMENT,"
-                        + "`uuid` varchar(64) NOT NULL,"
-                        + "`god` BOOLEAN,"
-                        + "`invisible` BOOLEAN,"
-                        + "`commandwatcher` BOOLEAN,"
-                        + "`spy` BOOLEAN,"
-                        + "`fly` BOOLEAN,"
-                        + "`muted` BOOLEAN,"
-                        + "`freeze` BOOLEAN,"
-                        + "`nickname` varchar(64) DEFAULT 'none'"
+                        + "`uuid` varchar(64) NOT NULL,"  
+                        + "`seenlast` INTEGER NOT NULL,"
+                        + "`daysinrow` INTEGER NOT NULL,"
+                        + "`playedtoday` BOOLEAN NOT NULL"
                         + ");";               
             }
             db.executeStatement(PLAYER_TABLE);

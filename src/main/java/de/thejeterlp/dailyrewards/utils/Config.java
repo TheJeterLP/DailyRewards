@@ -32,7 +32,7 @@ public enum Config {
     MYSQL_USER("MySQL.User", "root", "The user of the database"),
     MYSQL_PASSWORD("MySQL.Password", "password", "The password of the user"),
     DEBUG("Settings.Debug", false, "Should debug logging be enabled?"),
-    ;
+    RESET("Settings.Reset", 7, "After how many days should the daycounter be reseted?"),;
 
     private final Object value;
     private final String path;
@@ -69,7 +69,7 @@ public enum Config {
     public String getString() {
         return Utils.replaceColors(cfg.getString(path));
     }
-    
+
     public int getInteger() {
         return cfg.getInt(path);
     }
@@ -114,5 +114,9 @@ public enum Config {
             return;
         }
         load();
+    }
+
+    public static YamlConfiguration getConfig() {
+        return cfg;
     }
 }
