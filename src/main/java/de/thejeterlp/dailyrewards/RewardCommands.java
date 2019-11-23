@@ -57,7 +57,7 @@ public class RewardCommands {
         if (!args.isEmpty()) {
             return CommandResult.ERROR;
         }
-        sender.sendMessage("§aDailyRewards plugin by " + DailyRewards.getInstance().getDescription().getAuthors());
+        sender.sendMessage("§aDailyRewards plugin by " + DailyRewards.getInstance().getDescription().getAuthors() + " Version: " + DailyRewards.getInstance().getDescription().getVersion());
         return CommandResult.SUCCESS;
     }
 

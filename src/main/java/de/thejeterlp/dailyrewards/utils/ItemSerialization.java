@@ -45,6 +45,10 @@ public class ItemSerialization {
         ConfigurationSection sec = ItemSettings.getConfig().getConfigurationSection("Rewards." + day);
         List<ItemStack> stacks = new ArrayList<>();
 
+        if (sec == null) {
+            return stacks;
+        }
+
         try {
             // Try to parse this inventory
             for (String key : sec.getKeys(false)) {
