@@ -36,6 +36,9 @@ public class ItemSerialization {
 
             if (item != null && item.getType() != Material.AIR) {
                 sec.set(Integer.toString(i), item);
+            } else {
+                ItemStack stack = new ItemStack(Material.AIR, 1);
+                sec.set(Integer.toString(i), stack);
             }
         }
         ItemSettings.save();
